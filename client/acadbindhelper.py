@@ -2,25 +2,16 @@
 import os,sys,stat,time
 from pyautocad import *
 import pywinauto
-#import pymysql,pymssql
 import pymssql
 import sysinfo
 import json
 import socket,itertools
 
-#host,port = "localhost",8097
 from config import *
 
 os.chdir('D:\\')
 
 def main():
-    #username = "Username",
-    #password = "Password"
-    #warnings.simplefilter("once")
-    #h = helper(mysql = "superset1.minitech.site")
-    #e = h.GetExceptions_list()
-    #print(e)
-    #bind.RunBind()
     pass
 
 def print_func(func):#装饰器，打印func名
@@ -109,7 +100,6 @@ class helper():
 
     def StartACS(self):
         while 1:
-            #print(self.restartACS)
             os.system('tskill acstools')
             os.system('tskill AcsTakeoutFileTool')
             os.system('start "acstools" "%s"' % self.acs_exe)
@@ -151,8 +141,6 @@ class helper():
 
     def StartCAD(self): 
         while 1:
-            #print(self.restartCAD)
-            #os.system(self.restartCAD)
             os.system('tskill acad')
             os.system('start "acad" "%s"' % self.APP_dict['CAD'])
             print("Waiting for ACAD")
@@ -182,7 +170,6 @@ class helper():
                 if ex.treatment=='bind':
                     bind=Binding()
                     bind.RunBind(try_times=2)
-                    #self.log_result(file_name=bind.name,file_path=bind.path,result=str(bind.result))
                     if bind.result:
                         ex.window["确定"].click()
                     else:
@@ -200,22 +187,7 @@ class helper():
             CheckMEM()
             bc=BindCleaner(f_path=self.r_path,not_binded=self.GetNotBinded())
             bc.clean() 
-    '''
-    def log_result(self,file_name,file_path,result):
-        with open("d:\\result_log.txt","a") as txt:
-            txt.write("#".join(['file name',file_name,'file path',file_path,'result',result]))
-            txt.write("\n")
-        try:
-            
-            with pymysql.connect(host=self.host,user=self.user,passwd=self.passwd,db=self.db) as cur:
-                hostname=socket.gethostname()
-                cur.execute(u"INSERT INTO BindHelperRecord(file_name,file_path,result,hostname) VALUES(%s,%s,%s,%s)",[file_name,file_path,result,hostname])
-            print("#".join(['file name',file_name,'file path',file_path,'result',result]))
-            return 1
-        except:
-            print("log_result Failed")
-            return 0
-    '''
+
     def GetNotBinded(self):
         try:
             (host,user,password,database)=self.Server_dict[self.Server]
@@ -563,9 +535,6 @@ def OpenFile(path,open_bat='D:\\OpenFile.bat'):
             new_doc.doc=new_doc.acad.Application.documents.open(path)
             return new_doc
         except:
-            #with open(open_bat,'w') as f:
-            #    f.write('"'+path+'"')
-            #run_bat=os.system(open_bat) 
             run_bat=os.system('"'+path+'"') 
             for i in range(60):
                 time.sleep(1)
