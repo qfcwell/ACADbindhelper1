@@ -65,7 +65,6 @@ class Exception():
 
 class helper():
 
-    
     def __init__(self,mysql='',server='shenzhen',method=0):
         self.ACSPath_dict=rpc_conf["ACSPath_dict"]
         self.Server_dict=rpc_conf["Server_dict"]
